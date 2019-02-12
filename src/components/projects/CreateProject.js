@@ -19,13 +19,14 @@ class CreateProject extends Component {
         e.preventDefault()
         this.props.createProject(this.state)
         this.props.history.push("/")
+        console.log("working!", e)
     }
 
     render() {
         return (
             <div className="container">
                 <form onSubmit={this.handleSubmit} className="white">
-                    <h5 className="grey-text text-darken-3">Create Project</h5>
+                    <h5 className="grey-text text-darken-3">Create New Blog</h5>
                     <div className="input-field">
                         <label htmlFor="title">Title</label>
                         <input 
@@ -36,7 +37,7 @@ class CreateProject extends Component {
                         />
                     </div>
                     <div className="input-field">
-                        <label htmlFor="content">Project Content</label>
+                        <label htmlFor="content">Blog Content</label>
                         <textarea 
                             id="content" 
                             className="materialize-textarea"

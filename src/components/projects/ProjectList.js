@@ -1,17 +1,32 @@
-import React from 'react'
-
+import React, { Component } from 'react'
+import { connect } from 'react-redux'  
 import ProjectSummary from './ProjectSummary'
+import { deleteProject } from '../store/actions/projectActions';
 
-const ProjectList = ({projects}) => {
-    return (
-        <div className="project-list section">
-            { projects && projects.map(project => {
-                return (
-                    <ProjectSummary project={project} key={project.id} />
-                )
-            })}
-        </div>
-    )
+class ProjectList extends Component {
+    render () {
+        return (
+            <div className="project-list section">
+                {this.props.projects.map(project => {
+                    return (
+                        <ProjectSummary 
+                            project={project} 
+                            key={project.id} 
+                            deletePlan={this.props.deletePlan}
+                        />
+                    )
+                })}
+            </div>
+        )
+    }
 }
 
-export default ProjectList
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deletePlan: id => {
+            dispatch(deleteProject(id))
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(ProjectList)
