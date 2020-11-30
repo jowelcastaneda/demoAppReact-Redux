@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux'
 
-import authReducer from './authReducer'
-import projectReducer from './projectReducer'
+import restaurantReducer from './restaurantReducer'
+import reviewReducer from './reviewReducer'
 
 
 const rootReducer = combineReducers({
-    auth: authReducer,
-    project: projectReducer
+    restaurants: restaurantReducer,
+    reviews: reviewReducer
 })
 
 export default rootReducer

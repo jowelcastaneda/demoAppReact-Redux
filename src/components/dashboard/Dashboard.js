@@ -1,26 +1,31 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchProject } from '../store/actions/projectActions'
+import { bindActionCreators } from 'redux';
 
-import Notifications from './Notifications'
-import ProjectList from '../projects/ProjectList'
+import { getAllRestaurants } from '../actions/restaurantAction'
+import ProjectSummary from '../projects/ProjectSummary'
 
 class Dashboard extends Component {
+    static propTypes = {
+        getAllRestaurants: PropTypes.func,
+    };
+
     componentDidMount() {
-        this.props.fetch()
+        this.props.getAllRestaurants()
     }
 
     render() {
-        const { projects } = this.props;
+        const { restaurants } = this.props
+        if (!restaurants || restaurants.length < 1) {
+            return <h5 style={{ color: 'red', textAlign: 'center', paddingTop: '50px' }}>No Restaurant Available</h5>
+        }
 
         return (
             <div className="dashboard container">
                 <div className="row">
                     <div className="col s12 m6">
-                        <ProjectList projects={projects}/>
-                    </div>
-                    <div className="col s12 m5 offset-m1">
-                        <Notifications />                  
+                        {restaurants.map(restaurant => <ProjectSummary restaurant={restaurant}/>)}
                     </div>
                 </div>
             </div>
@@ -28,17 +33,14 @@ class Dashboard extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+function mapStateToProps(state) {
     return {
-        projects: state.project.projects
-    }
+        restaurants: state.restaurants.allrestaurants,
+    };
 }
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetch: () => {
-            dispatch(fetchProject())
-        }
-    }
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        getAllRestaurants,
+    }, dispatch);
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)

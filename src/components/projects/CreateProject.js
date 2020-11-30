@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-
-import { createProject } from '../../components/store/actions/projectActions'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+import { addNewRestaurant } from '../actions/restaurantAction'
 
 class CreateProject extends Component {
     state = {
-        title: '',
-        content: ''
+        name: '',
+        owner: '',
     }
 
     handleChange = (e) => {
@@ -17,32 +17,32 @@ class CreateProject extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        this.props.createProject(this.state)
+        console.log('1', this.state.name, this.state.owner);
+        this.props.addNewRestaurant(this.state.name, this.state.owner)
         this.props.history.push("/")
-        console.log("working!", e)
     }
 
     render() {
         return (
             <div className="container">
                 <form onSubmit={this.handleSubmit} className="white">
-                    <h5 className="grey-text text-darken-3">Create New Blog</h5>
+                    <h5 className="grey-text text-darken-3">Add New Restaurant</h5>
                     <div className="input-field">
-                        <label htmlFor="title">Title</label>
+                        <label htmlFor="name">Restaurant Name</label>
                         <input 
                             type="text" 
-                            id="title" 
+                            id="name" 
                             onChange={this.handleChange}
-                            value={this.state.title}
+                            value={this.state.name}
                         />
                     </div>
                     <div className="input-field">
-                        <label htmlFor="content">Blog Content</label>
+                        <label htmlFor="owner">Owner</label>
                         <textarea 
-                            id="content" 
+                            id="owner" 
                             className="materialize-textarea"
                             onChange={this.handleChange}
-                            value={this.state.content}
+                            value={this.state.owner}
                         />
                     </div>
                     <div className="input-field">
@@ -54,10 +54,10 @@ class CreateProject extends Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        createProject: (project) => dispatch(createProject(project))
-    }
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        addNewRestaurant,
+    }, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(CreateProject)

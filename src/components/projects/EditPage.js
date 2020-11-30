@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'  
-import { fetchProjectById } from '../store/actions/projectActions'    
-import { updateProject } from '../../components/store/actions/projectActions'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+import { addNewRestaurant } from '../actions/restaurantAction'  
 
 
 class EditPage extends Component {
@@ -66,8 +65,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetch: (id) => {dispatch(fetchProjectById(id))},
-        update: (id, project) => {dispatch(updateProject(id, project))}              
+        fetch: (id) => {dispatch(addNewRestaurant(id))},
     }
 }
 

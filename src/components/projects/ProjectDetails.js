@@ -1,27 +1,48 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchProjectById } from '../store/actions/projectActions'
-import image from './images/image.png'
-import { NavLink } from 'react-router-dom'
+import { getAllReviews } from '../actions/reviewAction'
+import { bindActionCreators } from 'redux';
+import ProjectList from '../projects/ProjectList'
+import Anzu from '../../images/restaurants/Anzu.jpeg'
+import CreoLa from '../../images/restaurants/CreoLa.jpg'
+import Fog from '../../images/restaurants/Fog Harbor Fish House.jpg'
 
 class ProjectDetails extends Component {
     componentDidMount() {
-        this.props.fetch(this.props.match.params.id)
+        this.props.getAllReviews(this.props.match.params.id)
     }
 
+    getImage = (name) => {
+        if (name === 'Anzu') {
+            return Anzu
+        } else if (name === 'CreoLa') {
+            return CreoLa
+        } else if (name === 'Fog Harbor Fish House') {
+            return Fog
+        }
+        return Anzu
+    }
+
+
     render() {
-        const { project } = this.props;
+        const { reviews } = this.props
+        if (!reviews || reviews.length < 1) {
+            return <h5 style={{ color: 'red', textAlign: 'center', paddingTop: '50px' }}>No Reviews Available</h5>
+        }
+
         return (
-            <div className="container section project-details">
-                <NavLink to={`/plan/edit/${project.id}`}><img className="image is-16x16" src={image} alt='' /> </NavLink>
-                <div className="card z-depth-0">
-                    <div className="card-conten">
-                        <span className="card-title">{project.title}</span> 
-                        <p>{project.content}</p>
-                        <div className="card-action gret lighten-4 grey-text">
-                            <div>Posted by the Net Ninja</div>
-                            <div>2nd September, 2am</div>
-                        </div>
+            <div className="dashboard container">
+                <div className="row">
+                    <div className="col-4">
+                        <img className="image is-16x16" src={this.getImage(this.props.match.params.name)} alt='' style={{ height: '80px', float: 'left', paddingRight: '20px' }} />
+                    </div>
+                    <div className="col-8">
+                        <h2 style={{  textAlign: 'left', color: 'grey' }}>{this.props.match.params.name}</h2>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col s12 m6">
+                        {reviews.map(review => <ProjectList review={review}/>)}
                     </div>
                 </div>
             </div>
@@ -30,15 +51,12 @@ class ProjectDetails extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        project: state.project.project
+        reviews: state.reviews.allReviews,
     }
 }
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetch: (id) => {
-            dispatch(fetchProjectById(id))
-        }
-    }
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        getAllReviews,
+    }, dispatch);
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectDetails)

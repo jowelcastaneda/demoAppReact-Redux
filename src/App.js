@@ -4,10 +4,12 @@ import { connect } from 'react-redux'
 import Navbar from './components/layout/Navbar'
 import Dashboard from './components/dashboard/Dashboard'
 import ProjectDetails from './components/projects/ProjectDetails'
+import ImageDetails from './components/projects/ImageDetails'
 import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
 import CreateProject from './components/projects/CreateProject'
 import EditPage from './components/projects/EditPage'
+import ImageRender from './components/projects/ImageRender'
 
 class App extends Component {
   render() {
@@ -17,20 +19,21 @@ class App extends Component {
           <Navbar />
           <Switch>
             <Route exact path='/' component={Dashboard} />
-            <Route exact path='/plan/:id' component={ProjectDetails} />
+            <Route exact path='/restaurant/:name/:id' component={ProjectDetails} />
             <Route exact path='/signin' component={SignIn} />
             <Route exact path='/signup' component={SignUp} />
             <Route exact path='/create' component={CreateProject} />
             <Route exact path='/plan/edit/:id' component={EditPage} />
+            <Route exact path='/:id' component={ImageRender} />
           </Switch>
         </div>
       </BrowserRouter>    
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {
-   id: state.project.projects.id
-  }
-}
-export default withRouter(connect(mapStateToProps)(App));
+// const mapStateToProps = (state) => {
+//   return {
+//    id: state.project.projects.id
+//   }
+// }
+export default withRouter(connect(null)(App));

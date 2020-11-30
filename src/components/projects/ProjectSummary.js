@@ -1,26 +1,34 @@
 import React, { Component } from 'react'
-import "bulma/css/bulma.css"
 import { NavLink } from 'react-router-dom'
-import { deleteProject } from '../../components/store/actions/projectActions'
-import { connect } from 'react-redux'   
+import { connect } from 'react-redux'
+import Anzu from '../../images/restaurants/Anzu.jpeg'
+import CreoLa from '../../images/restaurants/CreoLa.jpg'
+import Fog from '../../images/restaurants/Fog Harbor Fish House.jpg'
 
 class ProjectSummary extends Component {
 
-    handleClick = (id) => {
-        this.props.deleteProject(id)
+    getImage = (name) => {
+        if (name === 'Anzu') {
+            return Anzu
+        } else if (name === 'CreoLa') {
+            return CreoLa
+        } else if (name === 'Fog Harbor Fish House') {
+            return Fog
+        }
+        return Anzu
     }
 
     render() {
-        const { project } = this.props;
+        const { restaurant } = this.props;
         return (
             <div className="card z-depth-0 project-summary">
                 <div className="card-content grey-text text-darken-3">
                     <span className="card-title">
-                        <NavLink to={`/plan/${project.id}`}>{project.title}</NavLink>
-                        <button className="delete" onClick={() => this.handleClick(project.id)}/>
+                        <NavLink to={`/restaurant/${restaurant.restaurantName}/${restaurant.restaurantId}`}>{restaurant.restaurantName}</NavLink>
+                        <NavLink to={`/restaurant/${restaurant.restaurantName}/${restaurant.restaurantId}`}><img className="image is-16x16" src={this.getImage(restaurant.restaurantName)} alt='' style={{ height: '65px', float: 'right' }} /></NavLink>
                     </span>
-                    <p>Posted by the Net Ninja</p>
-                    <p className="grey-text">3rd September, 2am</p>
+                    <p>Posted by: {restaurant.createdBy}</p>
+                    <p className="grey-text">{restaurant.createdDate}</p>
                 </div>
             </div>
         )
@@ -29,8 +37,7 @@ class ProjectSummary extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        deleteProject: (id) => dispatch(deleteProject(id))
     }
 }
 
-export default connect(null, mapDispatchToProps)(ProjectSummary)
+export default connect(null, null)(ProjectSummary)

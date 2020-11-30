@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-
+import { NavLink, Link } from 'react-router-dom'
+import image from '../../images/Random/yelp.jpg'
 import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
 
@@ -8,7 +8,8 @@ const Navbar = () => {
     return (
         <nav className="nav-wrapper grey darken-3">
             <div className="container">
-                <Link to='/' className='brand-logo'>Daily Forum</Link>
+                <NavLink to={`/`}><img className="image is-16x16" src={image} alt='' style={{ height: '65px', float: 'right' }} /></NavLink>
+                <Link to='/' className='brand-logo'>Restaurants</Link>
                 <SignedInLinks />
                 <SignedOutLinks />
             </div>
