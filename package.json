@@ -48,7 +48,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.21.4",
     "eslint-plugin-standard": "^4.0.1",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "redux-thunk": "^2.2.0",
     "redux-form": "^7.3.0",
     "redux-mock-store": "^1.5.4",
